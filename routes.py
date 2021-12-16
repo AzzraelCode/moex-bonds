@@ -34,7 +34,7 @@ def get_bonds():
     # добалвю расчет доходностей yields (кот мосбиржа считает раз в сутки по пред дню)
     # считаю только те что is_traded = True, это ~2700 из 8000 облиг
     while True:
-        bond = db.get_next_bond(60*30)
+        bond = db.get_next_bond(60*60*24)
         if not bond:
             click.secho(f"Закончила обновлять", fg='green')
             break

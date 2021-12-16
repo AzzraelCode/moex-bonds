@@ -16,34 +16,35 @@ class Bond(Base):
     __tablename__ = "bonds"
     id = Column(Integer, primary_key=True)
     secid = Column(String)
+    shortname = Column(String)
+
+    price = Column(Float) # цена в проц от номинала
+    tradedate = Column(DateTime) # дата посл торгов, если при последней проверке торгов не было - заношу дату проверки
+    yieldsec = Column(Float) # расчитанная мосбиржей доходность в соотв. запросе (может отличаться нюансами)
+    volume = Column(Integer) # объем торгов на посл сессиий в выбраном режиме торгов (board)
+    matdate = Column(DateTime) # Дата погашения
+    couponfrequency = Column(Integer) # частота выплаты купона
+    couponpercent = Column(Float) # купон %
+    listlevel = Column(Integer) # Уровень листинга - 1 круто, 3 - нет
 
     updated = Column(DateTime)
 
-    shortname = Column(String)
     is_traded = Column(Boolean)
     emitent_id = Column(Integer)
     type = Column(String) # тип облиги (корп, офз, муниц)
     primary_boardid = Column(String) # осн. режим торгов (board)
 
     issuedate = Column(DateTime) # Дата начала торгов
-    matdate = Column(DateTime) # Дата погашения
     initialfacevalue = Column(Integer) # Первоначальная номинальная стоимость
     faceunit = Column(String) # валюта
     issuesize = Column(Integer) # объем выпуска
     facevalue = Column(Float) # Номинальная стоимость
-    couponfrequency = Column(Integer) # частота выплаты купона
     coupondate = Column(DateTime) # дата след купона (при условии обновленной базы)
-    couponpercent = Column(Float) # купон %
-    couponvalue = Column(Float) # купо нв деньгах
+    couponvalue = Column(Float) # купон нв деньгах
     isqualifiedinvestors = Column(Boolean) # только для квалов
-    listlevel = Column(Integer) # Уровень листинга - 1 круто, 3 - нет
     earlyrepayment = Column(Boolean) # Возможен досрочный выкуп
 
-    price = Column(Float) # цена в проц от номинала
-    tradedate = Column(DateTime) # дата посл торгов, если при последней проверке торгов не было - заношу дату проверки
-    yieldsec = Column(Float) # расчитанная мосбиржей доходность в соотв. запросе (может отличаться нюансами)
 
-    volume = Column(Integer) # объем торгов на посл сессиий в выбраном режиме торгов (board)
 
     def cast(self, val, _type, _key):
         """
@@ -98,6 +99,8 @@ class Bond(Base):
     def get_url(self):
         """
         Инфа по выпуску
+        https://www.tinkoff.ru/invest/bonds/{secid}/
+
         :return:
         """
         return f"https://www.moex.com/ru/issue.aspx?code={self.secid}"
