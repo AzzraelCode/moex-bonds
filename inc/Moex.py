@@ -73,11 +73,11 @@ class Moex:
 
         # если сделок не было, то что-то нужно записать в базу чтобы не запрашивать облигу сегодня ещё
         # todo: проверить - гипотетически пустые ответы могут быть сбоем
-        if len(_r) < 1: return {'price' : 0, 'yield' : 0, 'tradedate' : datetime.datetime.now().strftime("%Y-%m-%d"), 'volume' : 0}
+        if len(_r) < 1: return {'price' : 0, 'yieldsec' : 0, 'tradedate' : datetime.datetime.now().strftime("%Y-%m-%d"), 'volume' : 0}
 
         return {
             'price' : _r[-1]['close'],
-            'yield' : _r[-1]['yieldclose'],
+            'yieldsec' : _r[-1]['yieldclose'],
             'tradedate' : _r[-1]['tradedate'],
             'volume' : _r[-1]['volume'],
         }
